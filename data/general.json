@@ -1,0 +1,79 @@
+{
+  "organization": "Cape Town MS Developer User Group",
+  "abbreviation": "CPTMSDUG",
+  "description": "Join 1,875 passionate developers in Cape Town exploring Microsoft technologies, .NET, Azure, AI, and modern development practices.",
+  "member_count": null,
+  "website": "https://cptmsdug.dev/",
+  "location": "Cape Town, South Africa",
+  "twitter": "@CPTMSDUG",
+  "meetup_group": "https://www.meetup.com/cape-town-ms-dev-user-group/",
+  "mission": "We are dedicated to fostering a vibrant community of developers, architects, and technology enthusiasts passionate about Microsoft technologies and modern development practices.",
+  "statistics": {
+    "total_members": "1,875",
+    "events_hosted": "139+",
+    "years_active": "12+",
+    "speakers": "100+"
+  },
+  "core_values": [
+    {
+      "title": "Community First",
+      "description": "Building connections and fostering collaboration"
+    },
+    {
+      "title": "Continuous Learning",
+      "description": "Staying current with latest technologies"
+    },
+    {
+      "title": "Innovation",
+      "description": "Exploring cutting-edge solutions and ideas"
+    },
+    {
+      "title": "Collaboration",
+      "description": "Working together to solve real-world challenges"
+    }
+  ],
+  "technologies_focus": [
+    {
+      "name": ".NET & C#",
+      "description": "Modern .NET development, C# best practices, and cross-platform applications."
+    },
+    {
+      "name": "Microsoft Azure",
+      "description": "Cloud computing, Azure services, serverless architectures, and cloud-native solutions."
+    },
+    {
+      "name": "Mobile Development",
+      "description": "Xamarin, MAUI, cross-platform mobile apps, and mobile-first development strategies."
+    },
+    {
+      "name": "Artificial Intelligence",
+      "description": "AI services, machine learning, cognitive services, and intelligent applications."
+    },
+    {
+      "name": "DevOps",
+      "description": "CI/CD pipelines, Azure DevOps, automation, and modern deployment practices."
+    },
+    {
+      "name": "Web Development",
+      "description": "ASP.NET Core, Blazor, modern web frameworks, and progressive web applications."
+    },
+    {
+      "name": "IoT",
+      "description": "Internet of Things, edge computing, Azure IoT services, and connected devices."
+    },
+    {
+      "name": "Visual Studio",
+      "description": "Development tools, IDE best practices, extensions, and productivity techniques."
+    }
+  ],
+  "social_media": {
+    "meetup": "https://www.meetup.com/pro/dotnet",
+    "twitter": "https://twitter.com/CPTMSDUG/",
+    "linkedin": "https://www.linkedin.com/company/cptmsdug",
+    "sessionize": "https://sessionize.com/cape-town-ms-developer-user-group/"
+  },
+  "emails": [
+    "usergroup@cptmsdug.dev",
+    "sponsor@cptmsdug.dev"
+  ]
+}
