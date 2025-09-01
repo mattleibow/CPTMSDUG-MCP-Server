@@ -3,28 +3,18 @@
 Console.WriteLine("CPTMSDUG Data Library Demo");
 Console.WriteLine("==========================");
 
-// Initialize the data service
-var dataService = new CptmsdugDataService();
-
 // Use the GitHub URL for the data
 var dataUrl = "https://raw.githubusercontent.com/mattleibow/CPTMSDUG-MCP-Server/refs/heads/main/data/cptmsdug.json";
 
 try
 {
-    // Load the data
-    Console.WriteLine($"Loading data from: {dataUrl}");
-    var data = await dataService.LoadDataAsync(dataUrl);
-    
-    if (data == null)
-    {
-        Console.WriteLine("Failed to load data.");
-        return;
-    }
-
-    Console.WriteLine("Data loaded successfully!\n");
+    // Initialize the data service - this starts loading data in the background
+    Console.WriteLine($"Initializing service with data from: {dataUrl}");
+    var dataService = new CptmsdugDataService(dataUrl);
+    Console.WriteLine("Service initialized - data loading in background...\n");
 
     // Display user group information
-    var userGroup = dataService.GetUserGroup();
+    var userGroup = await dataService.GetUserGroupAsync();
     Console.WriteLine($"User Group: {userGroup?.Name}");
     Console.WriteLine($"Acronym: {userGroup?.Acronym}");
     Console.WriteLine($"Website: {userGroup?.Website}");
@@ -33,7 +23,7 @@ try
     Console.WriteLine();
 
     // Display events
-    var events = dataService.GetEvents();
+    var events = await dataService.GetEventsAsync();
     Console.WriteLine($"Upcoming Events ({events.Count}):");
     foreach (var evt in events.Take(3)) // Show first 3 events
     {
@@ -48,7 +38,7 @@ try
     }
 
     // Display speakers
-    var speakers = dataService.GetSpeakers();
+    var speakers = await dataService.GetSpeakersAsync();
     Console.WriteLine($"Speakers ({speakers.Count}):");
     foreach (var speaker in speakers.Take(5)) // Show first 5 speakers
     {
@@ -58,7 +48,7 @@ try
     }
 
     // Display summary
-    var summary = dataService.GetSummary();
+    var summary = await dataService.GetSummaryAsync();
     Console.WriteLine("Summary:");
     Console.WriteLine($"  Total Events: {summary?.TotalEvents}");
     Console.WriteLine($"  Total Speakers: {summary?.TotalSpeakers}");

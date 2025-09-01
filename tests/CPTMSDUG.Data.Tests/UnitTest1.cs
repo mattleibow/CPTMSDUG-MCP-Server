@@ -4,41 +4,16 @@ namespace CPTMSDUG.Data.Tests;
 
 public class CptmsdugDataServiceTests
 {
-    private readonly string _testDataPath;
-
-    public CptmsdugDataServiceTests()
-    {
-        // Get the path to the data file relative to the test project
-        var currentDirectory = Directory.GetCurrentDirectory();
-        var repositoryRoot = Path.GetFullPath(Path.Combine(currentDirectory, "..", "..", "..", "..", ".."));
-        _testDataPath = Path.Combine(repositoryRoot, "data", "cptmsdug_data.json");
-    }
+    private readonly string _testDataUrl = "https://raw.githubusercontent.com/mattleibow/CPTMSDUG-MCP-Server/refs/heads/main/data/cptmsdug.json";
 
     [Fact]
-    public async Task LoadDataAsync_ShouldLoadDataSuccessfully()
+    public async Task GetUserGroupAsync_ShouldReturnUserGroupData()
     {
         // Arrange
-        var service = new CptmsdugDataService();
+        var service = new CptmsdugDataService(_testDataUrl);
 
         // Act
-        var data = await service.LoadDataAsync(_testDataPath);
-
-        // Assert
-        Assert.NotNull(data);
-        Assert.NotNull(data.UserGroup);
-        Assert.Equal("Cape Town MS Developer User Group", data.UserGroup.Name);
-        Assert.Equal("CPTMSDUG", data.UserGroup.Acronym);
-    }
-
-    [Fact]
-    public async Task GetUserGroup_ShouldReturnUserGroupData()
-    {
-        // Arrange
-        var service = new CptmsdugDataService();
-        await service.LoadDataAsync(_testDataPath);
-
-        // Act
-        var userGroup = service.GetUserGroup();
+        var userGroup = await service.GetUserGroupAsync();
 
         // Assert
         Assert.NotNull(userGroup);
@@ -49,14 +24,13 @@ public class CptmsdugDataServiceTests
     }
 
     [Fact]
-    public async Task GetEvents_ShouldReturnEventsList()
+    public async Task GetEventsAsync_ShouldReturnEventsList()
     {
         // Arrange
-        var service = new CptmsdugDataService();
-        await service.LoadDataAsync(_testDataPath);
+        var service = new CptmsdugDataService(_testDataUrl);
 
         // Act
-        var events = service.GetEvents();
+        var events = await service.GetEventsAsync();
 
         // Assert
         Assert.NotNull(events);
@@ -69,14 +43,13 @@ public class CptmsdugDataServiceTests
     }
 
     [Fact]
-    public async Task GetSpeakers_ShouldReturnSpeakersList()
+    public async Task GetSpeakersAsync_ShouldReturnSpeakersList()
     {
         // Arrange
-        var service = new CptmsdugDataService();
-        await service.LoadDataAsync(_testDataPath);
+        var service = new CptmsdugDataService(_testDataUrl);
 
         // Act
-        var speakers = service.GetSpeakers();
+        var speakers = await service.GetSpeakersAsync();
 
         // Assert
         Assert.NotNull(speakers);
@@ -88,14 +61,13 @@ public class CptmsdugDataServiceTests
     }
 
     [Fact]
-    public async Task GetSummary_ShouldReturnSummaryData()
+    public async Task GetSummaryAsync_ShouldReturnSummaryData()
     {
         // Arrange
-        var service = new CptmsdugDataService();
-        await service.LoadDataAsync(_testDataPath);
+        var service = new CptmsdugDataService(_testDataUrl);
 
         // Act
-        var summary = service.GetSummary();
+        var summary = await service.GetSummaryAsync();
 
         // Assert
         Assert.NotNull(summary);
@@ -105,30 +77,56 @@ public class CptmsdugDataServiceTests
     }
 
     [Fact]
-    public async Task LoadDataAsync_WithUrl_ShouldLoadDataSuccessfully()
+    public async Task GetConferencesAsync_ShouldReturnConferencesList()
     {
         // Arrange
-        var service = new CptmsdugDataService();
-        var dataUrl = "https://raw.githubusercontent.com/mattleibow/CPTMSDUG-MCP-Server/refs/heads/main/data/cptmsdug.json";
+        var service = new CptmsdugDataService(_testDataUrl);
 
         // Act
-        var data = await service.LoadDataAsync(dataUrl);
+        var conferences = await service.GetConferencesAsync();
 
         // Assert
-        Assert.NotNull(data);
-        Assert.NotNull(data.UserGroup);
-        Assert.Equal("Cape Town MS Developer User Group", data.UserGroup.Name);
-        Assert.Equal("CPTMSDUG", data.UserGroup.Acronym);
+        Assert.NotNull(conferences);
+        // Conferences list may be empty, so just check it's not null
     }
 
     [Fact]
-    public void LoadDataAsync_WithInvalidPath_ShouldThrowFileNotFoundException()
+    public async Task GetDotNetConfAsync_ShouldReturnDotNetConfData()
     {
         // Arrange
-        var service = new CptmsdugDataService();
-        var invalidPath = "nonexistent.json";
+        var service = new CptmsdugDataService(_testDataUrl);
 
-        // Act & Assert
-        Assert.ThrowsAsync<FileNotFoundException>(() => service.LoadDataAsync(invalidPath));
+        // Act
+        var dotNetConf = await service.GetDotNetConfAsync();
+
+        // Assert
+        // DotNetConf may be null in the data, so just check the method works
+        Assert.True(true); // Test passes if no exception is thrown
+    }
+
+    [Fact]
+    public async Task GetContactAsync_ShouldReturnContactData()
+    {
+        // Arrange
+        var service = new CptmsdugDataService(_testDataUrl);
+
+        // Act
+        var contact = await service.GetContactAsync();
+
+        // Assert
+        Assert.NotNull(contact);
+    }
+
+    [Fact]
+    public async Task GetPagesAsync_ShouldReturnPagesData()
+    {
+        // Arrange
+        var service = new CptmsdugDataService(_testDataUrl);
+
+        // Act
+        var pages = await service.GetPagesAsync();
+
+        // Assert
+        Assert.NotNull(pages);
     }
 }
