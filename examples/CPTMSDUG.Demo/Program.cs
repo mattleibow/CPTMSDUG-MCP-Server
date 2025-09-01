@@ -6,16 +6,14 @@ Console.WriteLine("==========================");
 // Initialize the data service
 var dataService = new CptmsdugDataService();
 
-// Get the path to the data file
-var currentDirectory = Directory.GetCurrentDirectory();
-var repositoryRoot = Path.GetFullPath(Path.Combine(currentDirectory, "..", ".."));
-var dataPath = Path.Combine(repositoryRoot, "data", "cptmsdug_data.json");
+// Use the GitHub URL for the data
+var dataUrl = "https://raw.githubusercontent.com/mattleibow/CPTMSDUG-MCP-Server/refs/heads/main/data/cptmsdug.json";
 
 try
 {
     // Load the data
-    Console.WriteLine($"Loading data from: {dataPath}");
-    var data = await dataService.LoadDataAsync(dataPath);
+    Console.WriteLine($"Loading data from: {dataUrl}");
+    var data = await dataService.LoadDataAsync(dataUrl);
     
     if (data == null)
     {

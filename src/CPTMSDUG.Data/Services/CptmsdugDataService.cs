@@ -5,7 +5,7 @@ namespace CPTMSDUG.Data.Services;
 
 public interface ICptmsdugDataService
 {
-    Task<CptmsdugData?> LoadDataAsync(string filePath);
+    Task<CptmsdugData?> LoadDataAsync(string urlOrPath);
     CptmsdugData? GetCachedData();
     UserGroup? GetUserGroup();
     IReadOnlyList<Event> GetEvents();
@@ -21,26 +21,47 @@ public class CptmsdugDataService : ICptmsdugDataService
 {
     private CptmsdugData? _cachedData;
     private readonly JsonSerializerOptions _jsonOptions;
+    private readonly HttpClient _httpClient;
 
-    public CptmsdugDataService()
+    public CptmsdugDataService(HttpClient? httpClient = null)
     {
         _jsonOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
             AllowTrailingCommas = true
         };
+        _httpClient = httpClient ?? new HttpClient();
     }
 
-    public async Task<CptmsdugData?> LoadDataAsync(string filePath)
+    public async Task<CptmsdugData?> LoadDataAsync(string urlOrPath)
     {
-        if (!File.Exists(filePath))
+        string jsonContent;
+
+        if (IsUrl(urlOrPath))
         {
-            throw new FileNotFoundException($"Data file not found: {filePath}");
+            // Load from URL
+            var response = await _httpClient.GetAsync(urlOrPath);
+            response.EnsureSuccessStatusCode();
+            jsonContent = await response.Content.ReadAsStringAsync();
+        }
+        else
+        {
+            // Load from file path
+            if (!File.Exists(urlOrPath))
+            {
+                throw new FileNotFoundException($"Data file not found: {urlOrPath}");
+            }
+            jsonContent = await File.ReadAllTextAsync(urlOrPath);
         }
 
-        var jsonContent = await File.ReadAllTextAsync(filePath);
         _cachedData = JsonSerializer.Deserialize<CptmsdugData>(jsonContent, _jsonOptions);
         return _cachedData;
+    }
+
+    private static bool IsUrl(string input)
+    {
+        return Uri.TryCreate(input, UriKind.Absolute, out var uri) 
+               && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
     }
 
     public CptmsdugData? GetCachedData() => _cachedData;

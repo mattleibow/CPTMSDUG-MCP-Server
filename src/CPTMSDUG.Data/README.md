@@ -1,12 +1,13 @@
 # CPTMSDUG Data Library
 
-A C# library for loading and accessing data from the Cape Town MS Developer User Group (CPTMSDUG) JSON data files.
+A C# library for loading and accessing data from the Cape Town MS Developer User Group (CPTMSDUG) JSON data from GitHub.
 
 ## Features
 
 - **Type-safe models** for all CPTMSDUG data structures (Events, Speakers, Conferences, etc.)
 - **In-memory data store** for fast access to loaded data
 - **JSON deserialization** using System.Text.Json
+- **HTTP client support** for loading data from URLs
 - **Simple API** for accessing different data types
 - **Comprehensive test coverage**
 
@@ -28,8 +29,9 @@ using CPTMSDUG.Data.Services;
 // Create the data service
 var dataService = new CptmsdugDataService();
 
-// Load data from JSON file
-var data = await dataService.LoadDataAsync("path/to/cptmsdug_data.json");
+// Load data from GitHub URL
+var dataUrl = "https://raw.githubusercontent.com/mattleibow/CPTMSDUG-MCP-Server/refs/heads/main/data/cptmsdug.json";
+var data = await dataService.LoadDataAsync(dataUrl);
 
 // Access user group information
 var userGroup = dataService.GetUserGroup();
@@ -50,11 +52,20 @@ foreach (var speaker in speakers)
 }
 ```
 
+### Loading from File (for testing)
+
+The service also supports loading from local files:
+
+```csharp
+// Load from local file
+var data = await dataService.LoadDataAsync("path/to/cptmsdug_data.json");
+```
+
 ### Available Data Access Methods
 
 The `ICptmsdugDataService` interface provides the following methods:
 
-- `LoadDataAsync(string filePath)` - Load data from JSON file
+- `LoadDataAsync(string urlOrPath)` - Load data from URL or local file
 - `GetCachedData()` - Get the full loaded data object
 - `GetUserGroup()` - Get user group information
 - `GetEvents()` - Get list of events
@@ -104,7 +115,7 @@ The demo application produces output like:
 ```
 CPTMSDUG Data Library Demo
 ==========================
-Loading data from: /path/to/cptmsdug_data.json
+Loading data from: https://raw.githubusercontent.com/mattleibow/CPTMSDUG-MCP-Server/refs/heads/main/data/cptmsdug.json
 Data loaded successfully!
 
 User Group: Cape Town MS Developer User Group

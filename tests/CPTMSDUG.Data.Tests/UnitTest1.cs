@@ -105,6 +105,23 @@ public class CptmsdugDataServiceTests
     }
 
     [Fact]
+    public async Task LoadDataAsync_WithUrl_ShouldLoadDataSuccessfully()
+    {
+        // Arrange
+        var service = new CptmsdugDataService();
+        var dataUrl = "https://raw.githubusercontent.com/mattleibow/CPTMSDUG-MCP-Server/refs/heads/main/data/cptmsdug.json";
+
+        // Act
+        var data = await service.LoadDataAsync(dataUrl);
+
+        // Assert
+        Assert.NotNull(data);
+        Assert.NotNull(data.UserGroup);
+        Assert.Equal("Cape Town MS Developer User Group", data.UserGroup.Name);
+        Assert.Equal("CPTMSDUG", data.UserGroup.Acronym);
+    }
+
+    [Fact]
     public void LoadDataAsync_WithInvalidPath_ShouldThrowFileNotFoundException()
     {
         // Arrange
