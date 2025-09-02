@@ -127,19 +127,47 @@ The MCP server provides tools for:
 - Technology focus areas
 - Speaking, sponsorship, and volunteering opportunities
 - Contact information and community resources
+- Comprehensive community mission and values information
 
 See the [MCP Server README](Cptmsdug.McpServer/README.md) for detailed information about available tools.
+
+## Understanding CPTMSDUG's Mission and Values
+
+The MCP server includes specialized tools to help understand what the Cape Town Microsoft Developer User Group is all about:
+
+### About the Community Tool
+The `GetAboutCommunity` tool provides comprehensive information about:
+- **Community Identity**: What CPTMSDUG stands for and their role in the developer ecosystem
+- **Mission & Goals**: Primary and secondary mission statements plus core values
+- **Technology Focus**: Primary and secondary technology areas of interest
+- **Community Goals**: Growth targets, engagement objectives, and inclusivity initiatives
+- **Getting Involved**: Available opportunities for participation and contribution
+
+This tool is particularly useful for newcomers who want to understand the community's purpose, values, and how they can contribute to or benefit from the group's activities.
 
 ## Common Questions About Getting Involved
 
 Users often ask these questions when they want to learn more about CPTMSDUG or get involved:
 
-### About the Community
+### About the Community and Mission
 - What is CPTMSDUG and what does it stand for?
+- What is the mission and purpose of the Cape Town Microsoft Developer User Group?
+- What are the core values that drive the CPTMSDUG community?
+- What does CPTMSDUG care about most as a developer community?
 - How long has the Cape Town Microsoft Developer User Group been active?
 - What technologies and platforms does the group focus on?
 - How many members does the community have?
 - What types of events does CPTMSDUG organize?
+- What are the main goals of the CPTMSDUG community?
+- How does CPTMSDUG support the broader Microsoft developer ecosystem in South Africa?
+
+### Understanding the Community's Focus
+- What are CPTMSDUG's primary technology areas of interest?
+- How does the community stay current with Microsoft's evolving technology stack?
+- What role does CPTMSDUG play in the South African tech community?
+- How does the group promote innovation and best practices?
+- What makes CPTMSDUG different from other developer communities?
+- How does the community support professional development?
 
 ### Getting Involved
 - How can I join the CPTMSDUG community?

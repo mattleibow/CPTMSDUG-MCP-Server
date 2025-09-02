@@ -51,4 +51,23 @@ public partial class CommunityInfoTool(ICptmsdugDataStore dataStore)
         var mission = await dataStore.GetMissionAsync();
         return mission;
     }
+
+    [McpServerTool]
+    [Description("Gets comprehensive information about what the CPTMSDUG community is about, their core mission, values, goals, and what they care about as a developer community.")]
+    public async Task<object> GetAboutCommunity()
+    {
+        var data = await dataStore.GetDataAsync();
+        var technologies = await dataStore.GetTechnologiesAsync();
+        var opportunities = await dataStore.GetOpportunitiesAsync();
+
+        return new
+        {
+            Organization = data.Organization,
+            Description = data.Description,
+            Mission = data.Mission,
+            Technologies = technologies,
+            CommunityStats = data.CommunityStats,
+            Opportunities = opportunities
+        };
+    }
 }

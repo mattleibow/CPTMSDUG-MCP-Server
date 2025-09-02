@@ -3,23 +3,6 @@ using Cptmsdug.Core.Models;
 
 namespace Cptmsdug.Core.Services;
 
-public interface ICptmsdugDataStore
-{
-    Task<CptmsdugData> GetDataAsync();
-    Task<CommunityStats> GetCommunityStatsAsync();
-    Task<List<UpcomingEvent>> GetUpcomingEventsAsync();
-    Task<List<Speaker>> GetSpeakersAsync();
-    Task<List<Organizer>> GetOrganizersAsync();
-    Task<Organization> GetOrganizationAsync();
-    Task<Contact> GetContactAsync();
-    Task<Technologies> GetTechnologiesAsync();
-    Task<Mission> GetMissionAsync();
-    Task<Website> GetWebsiteAsync();
-    Task<Opportunities> GetOpportunitiesAsync();
-    Task<SpeakerStatistics> GetSpeakerStatisticsAsync();
-    Task<bool> IsDataLoadedAsync();
-}
-
 public class CptmsdugDataStore : ICptmsdugDataStore
 {
     private readonly HttpClient _httpClient;
@@ -43,22 +26,13 @@ public class CptmsdugDataStore : ICptmsdugDataStore
 
     private async Task<CptmsdugData> LoadDataAsync()
     {
-        try
-        {
-            var response = await _httpClient.GetAsync(_dataUrl);
-            response.EnsureSuccessStatusCode();
+        var response = await _httpClient.GetAsync(_dataUrl);
+        response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<CptmsdugData>(json, _jsonOptions);
+        var json = await response.Content.ReadAsStringAsync();
+        var data = JsonSerializer.Deserialize<CptmsdugData>(json, _jsonOptions);
 
-            return data ?? new CptmsdugData();
-        }
-        catch (Exception ex)
-        {
-            // Log the exception in a real application
-            Console.WriteLine($"Error loading CPTMSDUG data: {ex.Message}");
-            return new CptmsdugData();
-        }
+        return data ?? new CptmsdugData();
     }
 
     public async Task<CptmsdugData> GetDataAsync()
