@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET 10 (when available)
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+        dotnet-quality: 'preview'
+      continue-on-error: true
+      id: dotnet10
+      
+    - name: Setup .NET 9 (current latest)
+      if: steps.dotnet10.outcome == 'failure'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+        
+    - name: Extract version from tag
+      run: |
+        TAG_VERSION=${GITHUB_REF#refs/tags/v}
+        echo "VERSION=$TAG_VERSION" >> $GITHUB_ENV
+        echo "Release version: $TAG_VERSION"
+        
+    - name: Update package version
+      run: |
+        # Update version in the McpServer project file
+        sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/" src/Cptmsdug.McpServer/Cptmsdug.McpServer.csproj
+        echo "Updated package version to ${VERSION}"
+        
+    - name: Restore dependencies
+      run: dotnet restore src/Cptmsdug.sln
+      
+    - name: Build solution
+      run: dotnet build src/Cptmsdug.sln --configuration Release --no-restore
+      
+    - name: Run tests
+      run: dotnet test src/Cptmsdug.Core.Tests/ --configuration Release --no-build --verbosity normal
+      
+    - name: Pack .NET tool
+      run: dotnet pack src/Cptmsdug.McpServer/Cptmsdug.McpServer.csproj --configuration Release --no-build --output ./release-artifacts
+      
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: ./release-artifacts/*.nupkg
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+        
+    - name: Publish to NuGet.org
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: |
+        if [[ -n "$NUGET_API_KEY" ]]; then
+          echo "Publishing to NuGet.org..."
+          dotnet nuget push ./release-artifacts/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        else
+          echo "⚠️ NUGET_API_KEY secret not found. Skipping NuGet.org publication."
+          echo "To publish to NuGet.org, add your NuGet API key as a repository secret named 'NUGET_API_KEY'."
+        fi
