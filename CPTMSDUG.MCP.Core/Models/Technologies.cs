@@ -1,0 +1,12 @@
+using System.Text.Json.Serialization;
+
+namespace CPTMSDUG.MCP.Core.Models;
+
+public class Technologies
+{
+    [JsonPropertyName("primary")]
+    public List<string> Primary { get; set; } = new();
+
+    [JsonPropertyName("secondary")]
+    public List<string> Secondary { get; set; } = new();
+}

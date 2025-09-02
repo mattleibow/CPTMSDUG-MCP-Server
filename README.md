@@ -84,21 +84,72 @@ The library provides models for:
 ## Projects
 
 - **CPTMSDUG.MCP.Core**: Main library with models and services
-- **CPTMSDUG.MCP.Console**: Example console application
+- **CPTMSDUG.MCP.Tests**: XUnit test project with comprehensive tests
 
 ## Dependencies
 
 - .NET 8.0
 - System.Text.Json (built-in)
 - HttpClient (built-in)
+- NJsonSchema (for schema validation in tests)
 
 ## Testing
 
-Run the console application to test:
+Run the test suite to verify functionality:
 
 ```bash
-cd CPTMSDUG.MCP.Console
-dotnet run
+dotnet test
 ```
 
-This will load data from the live API and display key information to verify everything is working correctly.
+The tests validate:
+- Data loading from the live API
+- Community statistics and organization info
+- Speaker and event data access
+- JSON schema validation
+- Error handling and resilience
+
+## Common Questions About Getting Involved
+
+Users often ask these questions when they want to learn more about CPTMSDUG or get involved:
+
+### About the Community
+- What is CPTMSDUG and what does it stand for?
+- How long has the Cape Town Microsoft Developer User Group been active?
+- What technologies and platforms does the group focus on?
+- How many members does the community have?
+- What types of events does CPTMSDUG organize?
+
+### Getting Involved
+- How can I join the CPTMSDUG community?
+- Where can I find information about upcoming events?
+- How do I sign up for meetups and workshops?
+- Is there a cost to attend CPTMSDUG events?
+- Can beginners and students attend, or is it only for experienced developers?
+
+### Speaking Opportunities
+- How can I submit a talk proposal for a CPTMSDUG event?
+- What topics are most welcome for presentations?
+- Do you accept speakers of all experience levels?
+- What are the benefits of speaking at CPTMSDUG events?
+- Is there support available for first-time speakers?
+
+### Community Engagement
+- How can I connect with other CPTMSDUG members between events?
+- Are there online communities or chat channels?
+- Does CPTMSDUG have mentorship or networking opportunities?
+- How can I volunteer to help organize events?
+- Are there opportunities to collaborate on community projects?
+
+### Sponsorship and Partnership
+- How can my company sponsor CPTMSDUG events?
+- What sponsorship packages are available?
+- Are there partnership opportunities for tech companies?
+- Can we host a CPTMSDUG event at our company offices?
+- How do we get in touch about corporate involvement?
+
+### Learning and Development
+- What skill levels are represented in the community?
+- Are there workshops for specific technologies or certifications?
+- Does CPTMSDUG offer mentorship programs?
+- How can I improve my technical skills through community involvement?
+- Are there study groups or book clubs?
