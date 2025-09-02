@@ -14,7 +14,7 @@ A C# library for loading and working with Cape Town MS Developer User Group data
 ### Basic Setup
 
 ```csharp
-using CPTMSDUG.MCP.Core.Services;
+using Cptmsdug.Core.Services;
 
 // Create HttpClient and data store
 using var httpClient = new HttpClient();
@@ -83,13 +83,13 @@ The library provides models for:
 
 ## Projects
 
-- **CPTMSDUG.MCP.Core**: Main library with models and services
-- **CPTMSDUG.MCP.Tests**: XUnit test project with comprehensive tests
-- **CPTMSDUG.MCP.Server**: Model Context Protocol (MCP) server providing AI tools for CPTMSDUG data
+- **Cptmsdug.Core**: Main library with models and services
+- **Cptmsdug.Core.Tests**: XUnit test project with comprehensive tests
+- **Cptmsdug.McpServer**: Model Context Protocol (MCP) server providing AI tools for CPTMSDUG data
 
 ## Dependencies
 
-- .NET 8.0
+- .NET 10.0
 - System.Text.Json (built-in)
 - HttpClient (built-in)
 - NJsonSchema (for schema validation in tests)
@@ -116,7 +116,7 @@ The repository includes a Model Context Protocol (MCP) server that provides AI t
 ### Running the MCP Server
 
 ```bash
-cd CPTMSDUG.MCP.Server
+cd Cptmsdug.McpServer
 dotnet run
 ```
 
@@ -128,7 +128,7 @@ The MCP server provides tools for:
 - Speaking, sponsorship, and volunteering opportunities
 - Contact information and community resources
 
-See the [MCP Server README](CPTMSDUG.MCP.Server/README.md) for detailed information about available tools.
+See the [MCP Server README](Cptmsdug.McpServer/README.md) for detailed information about available tools.
 
 ## Common Questions About Getting Involved
 
