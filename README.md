@@ -85,6 +85,7 @@ The library provides models for:
 
 - **CPTMSDUG.MCP.Core**: Main library with models and services
 - **CPTMSDUG.MCP.Tests**: XUnit test project with comprehensive tests
+- **CPTMSDUG.MCP.Server**: Model Context Protocol (MCP) server providing AI tools for CPTMSDUG data
 
 ## Dependencies
 
@@ -107,6 +108,27 @@ The tests validate:
 - Speaker and event data access
 - JSON schema validation
 - Error handling and resilience
+
+## MCP Server
+
+The repository includes a Model Context Protocol (MCP) server that provides AI tools for accessing CPTMSDUG data. The server exposes various tools that can help answer common questions about the community.
+
+### Running the MCP Server
+
+```bash
+cd CPTMSDUG.MCP.Server
+dotnet run
+```
+
+The MCP server provides tools for:
+- Community information and statistics
+- Upcoming events and event details
+- Speaker and organizer profiles
+- Technology focus areas
+- Speaking, sponsorship, and volunteering opportunities
+- Contact information and community resources
+
+See the [MCP Server README](CPTMSDUG.MCP.Server/README.md) for detailed information about available tools.
 
 ## Common Questions About Getting Involved
 
