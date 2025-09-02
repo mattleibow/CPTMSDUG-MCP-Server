@@ -28,7 +28,7 @@
     <PackageId>Cptmsdug.McpServer</PackageId>
     <Version>0.1.0</Version>
     <Title>CPTMSDUG MCP Server</Title>
-    <Description>Model Context Protocol (MCP) server providing AI tools for accessing Cape Town Microsoft Developer User Group (CPTMSDUG) community data. Enables AI assistants to answer questions about CPTMSDUG events, speakers, opportunities, and community information.</Description>
+    <Description>Model Context Protocol (MCP) server providing AI tools for accessing Cape Town MS Developer User Group (CPTMSDUG) community data. Enables AI assistants to answer questions about CPTMSDUG events, speakers, opportunities, and community information.</Description>
     <Authors>Matthew Leibowitz</Authors>
     <Company>CPTMSDUG</Company>
     <Copyright>Copyright © CPTMSDUG 2025</Copyright>

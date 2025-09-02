@@ -1,10 +1,10 @@
 # CPTMSDUG MCP Server
 
-A C# library and Model Context Protocol (MCP) server for accessing Cape Town Microsoft Developer User Group (CPTMSDUG) data. This project provides both a .NET library for developers and an MCP server that enables AI assistants to answer questions about the CPTMSDUG community.
+A C# library and Model Context Protocol (MCP) server for accessing Cape Town MS Developer User Group (CPTMSDUG) data. This project provides both a .NET library for developers and an MCP server that enables AI assistants to answer questions about the CPTMSDUG community.
 
 ## What's Included
 
-- **Cptmsdug.Core**: .NET library for loading CPTMSDUG data from https://cptmsdug.dev/mcp.json
+- **Cptmsdug.Core**: .NET library for loading CPTMSDUG data from https://cptmsdug.dev/
 - **Cptmsdug.McpServer**: MCP server providing AI tools for community information
 - **Comprehensive Documentation**: Detailed guides for tools and common use cases
 
@@ -39,4 +39,4 @@ dotnet run
 
 ## Data Source
 
-All data is sourced from the live CPTMSDUG API at https://cptmsdug.dev/mcp.json, providing up-to-date information about the Cape Town Microsoft Developer User Group community.
+All data is sourced from the live CPTMSDUG API at https://cptmsdug.dev/, providing up-to-date information about the Cape Town MS Developer User Group community.

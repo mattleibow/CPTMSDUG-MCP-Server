@@ -1,6 +1,6 @@
 # Common Questions the CPTMSDUG MCP Server Can Answer
 
-This document outlines the types of questions that the CPTMSDUG MCP server can help answer about the Cape Town Microsoft Developer User Group community. The questions are organized by category to help users understand the scope and capabilities of the available tools.
+This document outlines the types of questions that the CPTMSDUG MCP server can help answer about the Cape Town MS Developer User Group community. The questions are organized by category to help users understand the scope and capabilities of the available tools.
 
 ## About the Community and Mission
 
@@ -8,10 +8,10 @@ These questions help newcomers understand what CPTMSDUG is all about:
 
 ### Basic Information
 - What is CPTMSDUG and what does it stand for?
-- What is the mission and purpose of the Cape Town Microsoft Developer User Group?
+- What is the mission and purpose of the Cape Town MS Developer User Group?
 - What are the core values that drive the CPTMSDUG community?
 - What does CPTMSDUG care about most as a developer community?
-- How long has the Cape Town Microsoft Developer User Group been active?
+- How long has the Cape Town MS Developer User Group been active?
 - How many members does the community have?
 - What role does CPTMSDUG play in the South African tech community?
 
