@@ -5,6 +5,40 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    
+    <!-- .NET Tool Configuration -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>cptmsdug-mcp</ToolCommandName>
+    
+    <!-- Trimming and Size Optimization -->
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+    <PublishSingleFile>false</PublishSingleFile>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+    
+    <!-- Remove unused assemblies and features -->
+    <DebuggerSupport>false</DebuggerSupport>
+    <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    
+    <!-- Package Metadata -->
+    <PackageId>Cptmsdug.McpServer</PackageId>
+    <Version>0.1.0</Version>
+    <Title>CPTMSDUG MCP Server</Title>
+    <Description>Model Context Protocol (MCP) server providing AI tools for accessing Cape Town Microsoft Developer User Group (CPTMSDUG) community data. Enables AI assistants to answer questions about CPTMSDUG events, speakers, opportunities, and community information.</Description>
+    <Authors>Matthew Leibowitz</Authors>
+    <Company>CPTMSDUG</Company>
+    <Copyright>Copyright © CPTMSDUG 2025</Copyright>
+    <PackageProjectUrl>https://github.com/mattleibow/CPTMSDUG-MCP-Server</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mattleibow/CPTMSDUG-MCP-Server</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mcp;model-context-protocol;cptmsdug;cape-town;microsoft;developer;user-group;ai-tools;dotnet-tool</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +49,28 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cptmsdug.Core\Cptmsdug.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- Trim unused features -->
+  <ItemGroup>
+    <TrimmerRootAssembly Include="Cptmsdug.McpServer" />
+    <TrimmerRootAssembly Include="Cptmsdug.Core" />
+    <TrimmerRootAssembly Include="ModelContextProtocol" />
+  </ItemGroup>
+
+  <!-- Runtime feature switches for size optimization -->
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
+    <RuntimeHostConfigurationOption Include="System.Net.SocketsHttpHandler.Http2UnencryptedSupport" Value="false" />
+    <RuntimeHostConfigurationOption Include="System.Reflection.NullabilityInfoContext.IsSupported" Value="false" />
+    <RuntimeHostConfigurationOption Include="System.ComponentModel.TypeConverter.EnableUnsafeBinaryFormatterSerialization" Value="false" />
+    <RuntimeHostConfigurationOption Include="System.Resources.ResourceManager.AllowCustomResourceTypes" Value="false" />
+    <RuntimeHostConfigurationOption Include="System.Text.Encoding.EnableUnsafeUTF7Encoding" Value="false" />
+    <RuntimeHostConfigurationOption Include="System.Threading.Thread.EnableAutoreleasePool" Value="false" />
   </ItemGroup>
 
 </Project>

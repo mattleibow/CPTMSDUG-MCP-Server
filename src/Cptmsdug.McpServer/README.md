@@ -1,54 +1,62 @@
 # CPTMSDUG MCP Server
 
-A Model Context Protocol (MCP) server that provides AI assistants with tools to access Cape Town Microsoft Developer User Group (CPTMSDUG) data.
+A Model Context Protocol (MCP) server that provides AI assistants with access to Cape Town MS Developer User Group (CPTMSDUG) community data.
 
-## Quick Start
+## Installation
 
-### Running the Server
+Install as a global .NET tool:
+
 ```bash
-dotnet run
+dotnet tool install -g Cptmsdug.McpServer
 ```
 
-The server uses stdio transport and communicates via the Model Context Protocol.
+## Usage
 
-### Integration
-The server can be integrated with any MCP-compatible client to provide AI assistants with access to CPTMSDUG community information.
+Once installed, the tool provides the `cptmsdug-mcp` command:
 
-## Available Tools
+```bash
+cptmsdug-mcp
+```
 
-The MCP server provides 25+ tools organized across 8 categories:
+The server communicates via stdio using the Model Context Protocol and is designed to be used with MCP-compatible AI clients and assistants.
 
-- **About Community**: Mission, values, technology focus, organizers
-- **Events**: Upcoming events, event formats, next meetup details  
-- **Speaking**: Submission process, topics, speaker benefits
-- **Sponsorship**: Corporate partnerships and venue hosting
-- **Getting Involved**: How to join, contact info, attendance guidelines
-- **Community Connections**: Networking, Discord, professional connections
-- **Learning & Development**: Skill development, certification support
-- **Volunteering**: How to help organize and contribute
-- **Past Events**: Event history, speaker archives, statistics
+## What This Tool Provides
 
-For complete details, see the [Tools Reference](../../docs/tools.md).
+This MCP server gives AI assistants access to comprehensive CPTMSDUG community information through 25+ specialized tools covering:
 
-## Common Use Cases
+- **Community Information**: Mission, values, organizers, and community stats
+- **Events**: Upcoming meetups, event formats, registration details
+- **Speaking Opportunities**: How to submit talks, topics, and speaker benefits  
+- **Sponsorship**: Corporate partnership and venue hosting opportunities
+- **Getting Involved**: Joining the community, contact information, guidelines
+- **Networking**: Discord community, professional connections
+- **Learning**: Skill development resources and certification support
+- **Volunteering**: Ways to help organize and contribute to events
+- **Event History**: Past speakers, event archives, and community statistics
 
-This server enables AI assistants to answer questions like:
+## Example Questions AI Can Answer
+
+With this MCP server, AI assistants can help with questions like:
+
 - "What is CPTMSDUG and how can I get involved?"
-- "When is the next event and how do I register?"
-- "How can I speak at a CPTMSDUG event?"
+- "When is the next CPTMSDUG event and how do I register?"
+- "How can I speak at a CPTMSDUG meetup?"
 - "What sponsorship opportunities are available?"
-- "How do I connect with other developers in the community?"
+- "How do I connect with other developers in Cape Town?"
+- "What topics are popular for CPTMSDUG presentations?"
+- "Who are the organizers and how can I contact them?"
 
-See the full list of [questions this server can answer](../../docs/questions.md).
+## Requirements
+
+- .NET 10.0 runtime
+- MCP-compatible AI client or assistant
 
 ## Data Source
 
-All data is sourced from the live CPTMSDUG API at https://cptmsdug.dev/mcp.json using the `Cptmsdug.Core` library.
+All information is sourced live from the official CPTMSDUG API at https://cptmsdug.dev, ensuring up-to-date community information.
 
-## Dependencies
+## More Information
 
-- .NET 10.0
-- ModelContextProtocol (0.3.0-preview.1)
-- Microsoft.Extensions.Hosting (9.0.6)
-- Microsoft.Extensions.Http (9.0.6)
-- Cptmsdug.Core (project reference)
+- [Project Repository](https://github.com/mattleibow/CPTMSDUG-MCP-Server)
+- [CPTMSDUG Website](https://cptmsdug.dev)
+- [Model Context Protocol](https://modelcontextprotocol.io/)

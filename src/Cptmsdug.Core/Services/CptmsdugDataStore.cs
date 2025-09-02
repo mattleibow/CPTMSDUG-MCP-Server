@@ -17,7 +17,8 @@ public class CptmsdugDataStore
         _jsonOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
-            WriteIndented = true
+            WriteIndented = true,
+            TypeInfoResolver = CptmsdugJsonContext.Default
         };
 
         // Start loading data immediately in constructor for fast startup
@@ -30,7 +31,7 @@ public class CptmsdugDataStore
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
-        var data = JsonSerializer.Deserialize<CptmsdugData>(json, _jsonOptions);
+        var data = JsonSerializer.Deserialize(json, CptmsdugJsonContext.Default.CptmsdugData);
 
         return data ?? new CptmsdugData();
     }
