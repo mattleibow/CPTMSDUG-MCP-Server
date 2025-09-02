@@ -14,6 +14,10 @@ public interface ICptmsdugDataStore
     Task<Contact> GetContactAsync();
     Task<Technologies> GetTechnologiesAsync();
     Task<Mission> GetMissionAsync();
+    Task<Website> GetWebsiteAsync();
+    Task<Opportunities> GetOpportunitiesAsync();
+    Task<SpeakerStatistics> GetSpeakerStatisticsAsync();
+    Task<bool> IsDataLoadedAsync();
 }
 
 public class CptmsdugDataStore : ICptmsdugDataStore
@@ -108,5 +112,36 @@ public class CptmsdugDataStore : ICptmsdugDataStore
     {
         var data = await _dataTask;
         return data.Mission;
+    }
+
+    public async Task<Website> GetWebsiteAsync()
+    {
+        var data = await _dataTask;
+        return data.Website;
+    }
+
+    public async Task<Opportunities> GetOpportunitiesAsync()
+    {
+        var data = await _dataTask;
+        return data.Opportunities;
+    }
+
+    public async Task<SpeakerStatistics> GetSpeakerStatisticsAsync()
+    {
+        var data = await _dataTask;
+        return data.SpeakerStatistics;
+    }
+
+    public async Task<bool> IsDataLoadedAsync()
+    {
+        try
+        {
+            var data = await _dataTask;
+            return !string.IsNullOrEmpty(data.Name);
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
