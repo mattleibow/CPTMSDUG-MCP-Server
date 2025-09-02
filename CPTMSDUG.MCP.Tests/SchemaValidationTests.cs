@@ -18,7 +18,7 @@ public class SchemaValidationTests : IDisposable
     {
         _httpClient = new HttpClient();
         _dataStore = new CptmsdugDataStore(_httpClient);
-        
+
         // Generate schema from the CptmsdugData model
         var settings = new SystemTextJsonSchemaGeneratorSettings();
         var schemaGenerator = new JsonSchemaGenerator(settings);
@@ -31,7 +31,7 @@ public class SchemaValidationTests : IDisposable
         // Assert
         Assert.NotNull(_schema);
         Assert.NotEmpty(_schema.ToJson());
-        
+
         // Check that the schema contains expected properties
         Assert.True(_schema.Properties.ContainsKey("name"));
         Assert.True(_schema.Properties.ContainsKey("organization"));
@@ -45,16 +45,16 @@ public class SchemaValidationTests : IDisposable
     {
         // Arrange
         var schemaPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cptmsdug-schema.json");
-        
+
         // Act
         var schemaJson = _schema.ToJson();
         File.WriteAllText(schemaPath, schemaJson);
-        
+
         // Assert
         Assert.True(File.Exists(schemaPath));
         var savedSchema = File.ReadAllText(schemaPath);
         Assert.NotEmpty(savedSchema);
-        
+
         // Verify the saved schema can be parsed
         var parsedSchema = JsonSchema.FromJsonAsync(savedSchema).Result;
         Assert.NotNull(parsedSchema);
@@ -65,7 +65,7 @@ public class SchemaValidationTests : IDisposable
     {
         // Arrange
         var data = await _dataStore.GetDataAsync();
-        
+
         // Act
         var jsonOptions = new JsonSerializerOptions
         {
@@ -73,10 +73,10 @@ public class SchemaValidationTests : IDisposable
             WriteIndented = true
         };
         var jsonData = JsonSerializer.Serialize(data, jsonOptions);
-        
+
         // Validate against schema
         var validationErrors = _schema.Validate(jsonData);
-        
+
         // Assert
         Assert.Empty(validationErrors);
     }
@@ -89,10 +89,10 @@ public class SchemaValidationTests : IDisposable
         var response = await _httpClient.GetAsync("https://cptmsdug.dev/mcp.json");
         response.EnsureSuccessStatusCode();
         var originalJson = await response.Content.ReadAsStringAsync();
-        
+
         // Act - Validate the original JSON against our schema
         var validationErrors = _schema.Validate(originalJson);
-        
+
         // Assert
         Assert.Empty(validationErrors);
     }
@@ -102,17 +102,17 @@ public class SchemaValidationTests : IDisposable
     {
         // Act
         var schemaJson = _schema.ToJson();
-        
+
         // Assert
         Assert.NotEmpty(schemaJson);
-        
+
         // Verify it contains key model definitions
         Assert.Contains("CptmsdugData", schemaJson);
         Assert.Contains("Organization", schemaJson);
         Assert.Contains("CommunityStats", schemaJson);
         Assert.Contains("UpcomingEvent", schemaJson);
         Assert.Contains("Speaker", schemaJson);
-        
+
         // Output the schema for manual inspection
         var schemaPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cptmsdug-schema.json");
         File.WriteAllText(schemaPath, schemaJson);

@@ -116,9 +116,9 @@ public class CptmsdugDataStoreTests : IDisposable
         Assert.NotNull(technologies.Primary);
         Assert.NotNull(technologies.Secondary);
         Assert.True(technologies.Primary.Count > 0, "Should have primary technologies");
-        
+
         // Expect .NET related technologies
-        var hasDotNetTech = technologies.Primary.Any(t => 
+        var hasDotNetTech = technologies.Primary.Any(t =>
             t.Contains(".NET", StringComparison.OrdinalIgnoreCase) ||
             t.Contains("C#", StringComparison.OrdinalIgnoreCase) ||
             t.Contains("Microsoft", StringComparison.OrdinalIgnoreCase));
@@ -170,7 +170,7 @@ public class CptmsdugDataStoreTests : IDisposable
 
         // Assert
         Assert.NotNull(events);
-        
+
         // Check if there are events with speakers and agenda items
         var eventsWithSpeakers = events.Where(e => e.Speakers?.Count > 0).ToList();
         var eventsWithAgenda = events.Where(e => e.Agenda?.Count > 0).ToList();

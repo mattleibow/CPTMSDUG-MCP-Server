@@ -30,7 +30,7 @@ public class CptmsdugDataStore : ICptmsdugDataStore
     public CptmsdugDataStore(HttpClient httpClient)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        
+
         _jsonOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
@@ -47,10 +47,10 @@ public class CptmsdugDataStore : ICptmsdugDataStore
         {
             var response = await _httpClient.GetAsync(_dataUrl);
             response.EnsureSuccessStatusCode();
-            
+
             var json = await response.Content.ReadAsStringAsync();
             var data = JsonSerializer.Deserialize<CptmsdugData>(json, _jsonOptions);
-            
+
             return data ?? new CptmsdugData();
         }
         catch (Exception ex)
