@@ -1,0 +1,14 @@
+{
+	"servers": {
+		"cptmsdug": {
+			"type": "stdio",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"../src/Cptmsdug.McpServer/Cptmsdug.McpServer.csproj"
+			]
+		}
+	},
+	"inputs": []
+}
