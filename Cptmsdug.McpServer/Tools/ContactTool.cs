@@ -29,7 +29,7 @@ public partial class ContactTool(ICptmsdugDataStore dataStore)
     {
         var contact = await dataStore.GetContactAsync();
         var website = await dataStore.GetWebsiteAsync();
-        
+
         return new
         {
             Contact = contact,

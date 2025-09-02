@@ -12,7 +12,7 @@ public partial class CommunityInfoTool(ICptmsdugDataStore dataStore)
     public async Task<object> GetCommunityInfo()
     {
         var data = await dataStore.GetDataAsync();
-        
+
         return new
         {
             Organization = data.Organization,
@@ -28,7 +28,7 @@ public partial class CommunityInfoTool(ICptmsdugDataStore dataStore)
     {
         var stats = await dataStore.GetCommunityStatsAsync();
         var speakerStats = await dataStore.GetSpeakerStatisticsAsync();
-        
+
         return new
         {
             CommunityStats = stats,

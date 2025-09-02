@@ -38,7 +38,7 @@ public partial class SpeakersTool(ICptmsdugDataStore dataStore)
         var speakers = await dataStore.GetSpeakersAsync();
         var organizers = await dataStore.GetOrganizersAsync();
         var speakerStats = await dataStore.GetSpeakerStatisticsAsync();
-        
+
         return new
         {
             Speakers = speakers,
