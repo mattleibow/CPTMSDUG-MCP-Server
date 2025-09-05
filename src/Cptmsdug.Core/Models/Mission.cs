@@ -5,12 +5,12 @@ namespace Cptmsdug.Core.Models;
 public class Mission
 {
     [JsonPropertyName("primary")]
-    public string Primary { get; set; } = string.Empty;
+    public string Primary { get; set; }
 
     [JsonPropertyName("secondary")]
-    public string Secondary { get; set; } = string.Empty;
+    public string Secondary { get; set; }
 
     [JsonPropertyName("values")]
-    public List<string> Values { get; set; } = new();
+    public List<string> Values { get; set; }
 }
 

@@ -7,7 +7,7 @@ public class CptmsdugDataStore
 {
     private readonly HttpClient _httpClient;
     private readonly string _dataUrl = "https://cptmsdug.dev/mcp.json";
-    private readonly Task<CptmsdugData> _dataTask;
+    private readonly Task<CptmsdugMcpData> _dataTask;
     private readonly JsonSerializerOptions _jsonOptions;
 
     public CptmsdugDataStore(HttpClient httpClient)
@@ -18,25 +18,25 @@ public class CptmsdugDataStore
         {
             PropertyNameCaseInsensitive = true,
             WriteIndented = true,
-            TypeInfoResolver = CptmsdugJsonContext.Default
+            TypeInfoResolver = CptmsdugMcpDataJsonContext.Default
         };
 
         // Start loading data immediately in constructor for fast startup
         _dataTask = LoadDataAsync();
     }
 
-    private async Task<CptmsdugData> LoadDataAsync()
+    private async Task<CptmsdugMcpData> LoadDataAsync()
     {
         var response = await _httpClient.GetAsync(_dataUrl);
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
-        var data = JsonSerializer.Deserialize(json, CptmsdugJsonContext.Default.CptmsdugData);
+        var data = JsonSerializer.Deserialize(json, CptmsdugMcpDataJsonContext.Default.CptmsdugMcpData);
 
-        return data ?? new CptmsdugData();
+        return data ?? new CptmsdugMcpData();
     }
 
-    public async Task<CptmsdugData> GetDataAsync()
+    public async Task<CptmsdugMcpData> GetDataAsync()
     {
         return await _dataTask;
     }
@@ -47,19 +47,25 @@ public class CptmsdugDataStore
         return data.CommunityStats;
     }
 
-    public async Task<List<EventUpcoming>> GetUpcomingEventsAsync()
+    public async Task<List<Event>> GetUpcomingEventsAsync()
     {
         var data = await _dataTask;
-        return data.Events.UpcomingEvents;
+        return data.Events.AllEvents
+            .Where(e => e.IsUpcoming)
+            .OrderBy(e => e.StartTime)
+            .ToList();
     }
 
-    public async Task<List<EventPast>> GetPastEventsAsync()
+    public async Task<List<Event>> GetPastEventsAsync()
     {
         var data = await _dataTask;
-        return data.Events.PastEvents;
+        return data.Events.AllEvents
+            .Where(e => e.IsPast)
+            .OrderByDescending(e => e.StartTime)
+            .ToList();
     }
 
-    public async Task<List<EventSpeaker>> GetSpeakersAsync()
+    public async Task<List<Speaker>> GetSpeakersAsync()
     {
         var data = await _dataTask;
         return data.Speakers;
@@ -71,7 +77,7 @@ public class CptmsdugDataStore
         return data.Organizers;
     }
 
-    public async Task<Organization> GetOrganizationAsync()
+    public async Task<CommunityInformation> GetOrganizationAsync()
     {
         var data = await _dataTask;
         return data.Organization;
@@ -83,7 +89,7 @@ public class CptmsdugDataStore
         return data.Contact;
     }
 
-    public async Task<Technologies> GetTechnologiesAsync()
+    public async Task<CommunityTechnologies> GetTechnologiesAsync()
     {
         var data = await _dataTask;
         return data.Technologies;
@@ -107,7 +113,7 @@ public class CptmsdugDataStore
         return data.Opportunities;
     }
 
-    public async Task<SpeakerStatistics> GetSpeakerStatisticsAsync()
+    public async Task<CommunitySpeakerStatistics> GetSpeakerStatisticsAsync()
     {
         var data = await _dataTask;
         return data.SpeakerStatistics;

@@ -57,7 +57,7 @@ public class CptmsdugDataStoreTests : IDisposable
         // Assert
         Assert.NotNull(stats);
         Assert.True(stats.Members > 1000, "Community should have more than 1000 members");
-        Assert.NotEmpty(stats.EventsHosted);
+        Assert.True(stats.EventsHosted > 50, "Community should have hosted more than 50 events");
         Assert.True(stats.Rating > 0, "Rating should be positive");
         Assert.True(stats.Reviews >= 0, "Reviews should be non-negative");
     }
@@ -70,12 +70,12 @@ public class CptmsdugDataStoreTests : IDisposable
 
         // Assert
         Assert.NotNull(events);
+        Assert.NotEmpty(events);
+
         // Note: Events may vary over time, so we just check that the collection is accessible
         foreach (var evt in events)
         {
             Assert.NotEmpty(evt.Name);
-            Assert.NotNull(evt.Agenda);
-            Assert.NotNull(evt.Speakers);
         }
     }
 
@@ -87,14 +87,12 @@ public class CptmsdugDataStoreTests : IDisposable
 
         // Assert
         Assert.NotNull(events);
+        Assert.NotEmpty(events);
+
         // Past events should exist for an established community
         foreach (var evt in events)
         {
             Assert.NotEmpty(evt.Name);
-            Assert.NotEmpty(evt.Date);
-            Assert.NotNull(evt.Topics);
-            Assert.NotNull(evt.Tags);
-            Assert.NotNull(evt.Sessions);
         }
     }
 

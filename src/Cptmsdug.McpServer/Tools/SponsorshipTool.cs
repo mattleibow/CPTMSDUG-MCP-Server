@@ -19,59 +19,25 @@ public partial class SponsorshipTool(CptmsdugDataStore dataStore)
             {
                 Members = data.CommunityStats.Members,
                 Rating = data.CommunityStats.Rating,
-                Reviews = data.CommunityStats.Reviews
+                Reviews = data.CommunityStats.Reviews,
+                EventsHosted = data.CommunityStats.EventsHosted,
+                YearsActive = data.Organization.YearsActive
             },
             SponsorshipTypes = data.Opportunities.Sponsorship.Types,
-            ContactInformation = new
-            {
-                Email = data.Opportunities.Sponsorship.Contact
-            },
-            CommunityValue = new
+            SponsorshipBenefits = data.Opportunities.Speaking.Benefits,
+            AudienceProfile = new
             {
                 TechnologyFocus = data.Technologies.Primary,
                 CommunityMission = data.Mission.Primary,
-                YearsActive = data.Organization.YearsActive,
-                Affiliations = data.Organization.Affiliations
-            }
-        };
-    }
-
-    [McpServerTool]
-    [Description("Get specific information about sponsorship packages and corporate partnership options. Use when companies need detailed sponsorship information.")]
-    public async Task<object> GetSponsorshipPackages()
-    {
-        var data = await dataStore.GetDataAsync();
-
-        return new
-        {
-            AvailableSponsorshipTypes = data.Opportunities.Sponsorship.Types,
-            EventMetrics = new
-            {
-                CommunitySize = data.CommunityStats.Members,
-                EventTypes = data.Events.Types,
-                TypicalVenues = data.Events.Format.Venues
+                ProfessionalLevel = "Mix of junior to senior developers and technical leaders",
+                Industries = "Technology, consulting, healthcare, finance, and more"
             },
-            ContactEmail = data.Opportunities.Sponsorship.Contact
-        };
-    }
-
-    [McpServerTool]
-    [Description("Get information about hosting CPTMSDUG events at company venues. Perfect for companies asking 'Can we host an event at our office?'")]
-    public async Task<object> GetVenueHostingOpportunities()
-    {
-        var data = await dataStore.GetDataAsync();
-
-        return new
-        {
-            TypicalEventFormat = new
+            ContactInformation = new
             {
-                Duration = data.Events.Format.Duration,
-                Frequency = data.Events.Format.Frequency
+                Email = data.Opportunities.Sponsorship.Contact,
+                Process = "Contact us to discuss custom sponsorship packages"
             },
-            Contact = new
-            {
-                Email = data.Opportunities.Sponsorship.Contact
-            }
+            Affiliations = data.Organization.Affiliations
         };
     }
 }

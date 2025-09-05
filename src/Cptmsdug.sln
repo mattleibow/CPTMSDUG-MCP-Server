@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cptmsdug.Core.Tests", "Cptm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cptmsdug.McpServer", "Cptmsdug.McpServer\Cptmsdug.McpServer.csproj", "{B2C44F8A-9D2B-4E89-A8CC-D1234567890A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cptmsdug.McpServer.Tests", "Cptmsdug.McpServer.Tests\Cptmsdug.McpServer.Tests.csproj", "{C3D55F9B-0E3C-5F90-B9DD-E2345678901B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{B2C44F8A-9D2B-4E89-A8CC-D1234567890A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2C44F8A-9D2B-4E89-A8CC-D1234567890A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2C44F8A-9D2B-4E89-A8CC-D1234567890A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D55F9B-0E3C-5F90-B9DD-E2345678901B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D55F9B-0E3C-5F90-B9DD-E2345678901B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D55F9B-0E3C-5F90-B9DD-E2345678901B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D55F9B-0E3C-5F90-B9DD-E2345678901B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
