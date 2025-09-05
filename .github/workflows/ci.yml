@@ -12,18 +12,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Setup .NET 10
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.0.x'
         dotnet-quality: 'preview'
-        
-    - name: Restore dependencies
-      run: dotnet restore src/Cptmsdug.sln
-      
+
     - name: Build solution
-      run: dotnet build src/Cptmsdug.sln --configuration Release --no-restore
+      run: dotnet build --configuration Release
 
   test:
     runs-on: ubuntu-latest
@@ -31,21 +28,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Setup .NET 10
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.0.x'
         dotnet-quality: 'preview'
-        
-    - name: Restore dependencies
-      run: dotnet restore src/Cptmsdug.sln
-      
-    - name: Build solution
-      run: dotnet build src/Cptmsdug.sln --configuration Release --no-restore
-      
+
     - name: Run tests
-      run: dotnet test src/Cptmsdug.Core.Tests/ --configuration Release --no-build --verbosity normal
+      run: dotnet test --configuration Release
 
   pack:
     runs-on: ubuntu-latest
@@ -53,22 +44,16 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Setup .NET 10
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.0.x'
         dotnet-quality: 'preview'
-        
-    - name: Restore dependencies
-      run: dotnet restore src/Cptmsdug.sln
-      
-    - name: Build solution
-      run: dotnet build src/Cptmsdug.sln --configuration Release --no-restore
-      
+
     - name: Pack .NET tool
-      run: dotnet pack src/Cptmsdug.McpServer/Cptmsdug.McpServer.csproj --configuration Release --no-build --output ./artifacts
-      
+      run: dotnet pack --configuration Release --output ./artifacts
+
     - name: Upload package artifacts
       uses: actions/upload-artifact@v4
       with:

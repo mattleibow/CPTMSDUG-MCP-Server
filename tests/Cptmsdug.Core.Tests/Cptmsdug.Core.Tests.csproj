@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cptmsdug.Core\Cptmsdug.Core.csproj" />
+    <ProjectReference Include="..\..\src\Cptmsdug.Core\Cptmsdug.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -34,7 +34,7 @@ public partial class AboutCommunityTool(CptmsdugDataStore dataStore)
 ### Building and Testing
 ```bash
 # Build entire solution
-dotnet build src/Cptmsdug.sln
+dotnet build
 
 # Run tests (note: tests hit live API at https://cptmsdug.dev/mcp.json)
 dotnet test src/Cptmsdug.Core.Tests/

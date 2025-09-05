@@ -16,14 +16,6 @@ Install as a global .NET tool:
 dotnet tool install -g Cptmsdug.McpServer
 ```
 
-## Usage
-
-Once installed, the tool provides the `cptmsdug-mcp` command:
-
-```bash
-cptmsdug-mcp
-```
-
 The server communicates via stdio using the Model Context Protocol and is designed to be used with MCP-compatible AI clients and assistants.
 
 ## Developer Quick Start
@@ -43,15 +35,8 @@ dotnet build
 dotnet test
 ```
 
-### Running the MCP Server
-```bash
-cd src/Cptmsdug.McpServer
-dotnet run
-```
-
 ## Documentation
 
-- [MCP Tools Reference](docs/tools.md) - Complete list of available tools and data sources
 - [Common Questions](docs/questions.md) - Questions this server can help answer about CPTMSDUG
 - [MCP Server Details](src/Cptmsdug.McpServer/README.md) - Technical details about the MCP server
 
