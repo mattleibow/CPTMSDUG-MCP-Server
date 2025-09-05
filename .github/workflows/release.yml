@@ -37,13 +37,13 @@ jobs:
       run: dotnet test src/Cptmsdug.Core.Tests/ --configuration Release --no-build --verbosity normal
       
     - name: Pack .NET tool
-      run: dotnet pack src/Cptmsdug.McpServer/Cptmsdug.McpServer.csproj --configuration Release --no-build --output ./release-artifacts
+      run: dotnet pack src/Cptmsdug.McpServer/Cptmsdug.McpServer.csproj --configuration Release --no-build --output ./artifacts
       
     - name: Upload release artifacts
       uses: actions/upload-artifact@v4
       with:
         name: release-packages
-        path: ./release-artifacts/*.nupkg
+        path: ./artifacts/*.nupkg
         retention-days: 30
 
   release:
@@ -57,12 +57,12 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: release-packages
-        path: ./release-artifacts
+        path: ./artifacts
         
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
-        files: ./release-artifacts/*.nupkg
+        files: ./artifacts/*.nupkg
         generate_release_notes: true
         draft: false
         prerelease: false
@@ -72,7 +72,7 @@ jobs:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
       run: |
         if [[ -n "$NUGET_API_KEY" ]]; then
-          dotnet nuget push ./release-artifacts/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+          dotnet nuget push ./artifacts/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
         else
           echo "⚠️ NUGET_API_KEY secret not found. Skipping NuGet.org publication."
         fi
