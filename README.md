@@ -12,8 +12,16 @@ A C# library and Model Context Protocol (MCP) server for accessing Cape Town MS 
 
 Install as a global .NET tool:
 
-```bash
-dotnet tool install -g Cptmsdug.McpServer
+```json
+{
+  "servers": {
+    "cptmsdug": {
+      "type": "stdio",
+      "command": "dnx",
+      "args": [ "-y", "Cptmsdug.McpServer" ]
+    }
+  }
+}
 ```
 
 The server communicates via stdio using the Model Context Protocol and is designed to be used with MCP-compatible AI clients and assistants.

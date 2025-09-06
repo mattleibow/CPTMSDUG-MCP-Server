@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "cptmsdug": {
+      "type": "stdio",
+      "command": "dnx",
+      "args": [ "-y", "Cptmsdug.McpServer" ]
+    }
+  }
+}
