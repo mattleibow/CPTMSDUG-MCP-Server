@@ -104,6 +104,10 @@ public class Event
     [JsonIgnore]
     public bool IsPast => StartTime.HasValue && StartTime.Value <= DateTimeOffset.UtcNow;
 
+    // Computed property that merges all speaker sources
+    [JsonIgnore]
+    public List<Speaker> AllSpeakers => GetAllSpeakers();
+
     private DateTimeOffset? ParseStartTime()
     {
         // Format 1: Separate "date" and "time" fields
@@ -200,6 +204,45 @@ public class Event
         }
 
         return dates;
+    }
+
+    private List<Speaker> GetAllSpeakers()
+    {
+        var allSpeakers = new List<Speaker>();
+
+        // Add speakers from the Speakers collection (detailed speaker objects)
+        if (Speakers != null)
+        {
+            allSpeakers.AddRange(Speakers);
+        }
+
+        // Create speaker objects from session speakers (string names only)
+        if (Sessions != null)
+        {
+            foreach (var session in Sessions)
+            {
+                if (!string.IsNullOrEmpty(session.Speaker))
+                {
+                    // Check if we already have this speaker from the Speakers collection
+                    if (!allSpeakers.Any(s => string.Equals(s.Name, session.Speaker, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        allSpeakers.Add(new Speaker { Name = session.Speaker });
+                    }
+                }
+            }
+        }
+
+        // Create speaker object from the direct Speaker property (string name only)
+        if (!string.IsNullOrEmpty(Speaker))
+        {
+            // Check if we already have this speaker
+            if (!allSpeakers.Any(s => string.Equals(s.Name, Speaker, StringComparison.OrdinalIgnoreCase)))
+            {
+                allSpeakers.Add(new Speaker { Name = Speaker });
+            }
+        }
+
+        return allSpeakers;
     }
 }
 

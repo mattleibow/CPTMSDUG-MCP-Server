@@ -28,7 +28,7 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
             Description = !string.IsNullOrEmpty(evt.Abstract)
                 ? TruncateText(evt.Abstract, 200)
                 : "Details to be announced",
-            Speakers = evt.Speakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
+            Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
             Agenda = evt.Agenda?.ToArray() ?? []
         }).ToList();
 
@@ -87,11 +87,7 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
                 Description = nextEvent.Abstract
             },
             Topics = nextEvent.Topics,
-            Speakers = nextEvent.Speakers?.Select(s => new
-            {
-                s.Name,
-                s.Company
-            }).ToArray() ?? [],
+            Speakers = nextEvent.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
             Agenda = nextEvent.Agenda?.ToArray() ?? [],
             Registration = new
             {
@@ -121,7 +117,7 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
                 Topics = evt.Topics,
                 Tags = evt.Tags,
                 Attendees = evt.Attendees,
-                Speaker = evt.Speaker,
+                Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
                 Description = !string.IsNullOrEmpty(evt.Abstract)
                     ? TruncateText(evt.Abstract, 200)
                     : "Event details",
@@ -165,7 +161,7 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
                 StartTime = evt.StartTime,
                 EndTime = evt.EndTime,
                 Venue = evt.Venue,
-                Speaker = evt.Speaker,
+                Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
                 Topics = evt.Topics,
                 Tags = evt.Tags,
                 Attendees = evt.Attendees,
@@ -210,7 +206,7 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
                 StartTime = evt.StartTime,
                 EndTime = evt.EndTime,
                 Venue = evt.Venue,
-                Speaker = evt.Speaker,
+                Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
                 Topics = evt.Topics,
                 Tags = evt.Tags,
                 Attendees = evt.Attendees,
@@ -225,9 +221,32 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
             }).ToList();
 
         var matchingUpcomingEvents = upcomingEvents
-            .Where(evt => evt.Topics?.Any(topic => topic.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ?? false)
-            .Select(evt => new { evt.Name, evt.StartTime, evt.EndTime, evt.Topics, evt.MeetupUrl })
-            .ToList();
+            .Where(evt =>
+                (evt.Topics?.Any(topic => topic.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ?? false) ||
+                (evt.Tags?.Any(tag => tag.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ?? false) ||
+                evt.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                (evt.Abstract?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                (evt.Sessions?.Any(session => session.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ?? false))
+            .OrderByDescending(evt => evt.StartTime)
+            .Select(evt => new
+            {
+                Name = evt.Name,
+                StartTime = evt.StartTime,
+                EndTime = evt.EndTime,
+                Venue = evt.Venue,
+                Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
+                Topics = evt.Topics,
+                Tags = evt.Tags,
+                Attendees = evt.Attendees,
+                MeetupUrl = evt.MeetupUrl,
+                Description = !string.IsNullOrEmpty(evt.Abstract)
+                    ? TruncateText(evt.Abstract, 150)
+                    : "Event details",
+                RelevantSessions = evt.Sessions?
+                    .Where(s => s.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new { Topic = s.Title, s.Speaker })
+                    .ToArray() ?? []
+            }).ToList();
 
         return new
         {
