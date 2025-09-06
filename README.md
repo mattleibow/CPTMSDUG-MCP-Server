@@ -10,7 +10,7 @@ A C# library and Model Context Protocol (MCP) server for accessing Cape Town MS 
 
 ## Installation
 
-Install as a global .NET tool:
+Install as a VS Code MCP:
 
 ```json
 {

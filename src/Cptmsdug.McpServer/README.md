@@ -4,18 +4,18 @@ A Model Context Protocol (MCP) server that provides AI assistants with access to
 
 ## Installation
 
-Install as a global .NET tool:
+Install as a VS Code MCP:
 
-```bash
-dotnet tool install -g Cptmsdug.McpServer
-```
-
-## Usage
-
-Once installed, the tool provides the `cptmsdug-mcp` command:
-
-```bash
-cptmsdug-mcp
+```json
+{
+  "servers": {
+    "cptmsdug": {
+      "type": "stdio",
+      "command": "dnx",
+      "args": [ "-y", "Cptmsdug.McpServer" ]
+    }
+  }
+}
 ```
 
 The server communicates via stdio using the Model Context Protocol and is designed to be used with MCP-compatible AI clients and assistants.
