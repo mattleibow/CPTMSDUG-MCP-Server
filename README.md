@@ -1,5 +1,8 @@
 # CPTMSDUG MCP Server
 
+![NuGet Version](https://img.shields.io/nuget/vpre/Cptmsdug.McpServer)
+
+
 A C# library and Model Context Protocol (MCP) server for accessing Cape Town MS Developer User Group (CPTMSDUG) data. This project provides both a .NET library for developers and an MCP server that enables AI assistants to answer questions about the CPTMSDUG community.
 
 ## What's Included
