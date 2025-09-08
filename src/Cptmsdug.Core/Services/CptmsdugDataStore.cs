@@ -52,7 +52,7 @@ public class CptmsdugDataStore
         var data = await _dataTask;
         return data.Events.AllEvents
             .Where(e => e.IsUpcoming)
-            .OrderBy(e => e.StartTime)
+            .OrderBy(e => e.StartDateTime)
             .ToList();
     }
 
@@ -61,7 +61,7 @@ public class CptmsdugDataStore
         var data = await _dataTask;
         return data.Events.AllEvents
             .Where(e => e.IsPast)
-            .OrderByDescending(e => e.StartTime)
+            .OrderByDescending(e => e.StartDateTime)
             .ToList();
     }
 

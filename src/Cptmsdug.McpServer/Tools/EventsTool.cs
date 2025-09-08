@@ -17,8 +17,8 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
         var upcomingEventsInfo = upcomingEvents.Select(evt => new
         {
             Name = evt.Name,
-            StartTime = evt.StartTime,
-            EndTime = evt.EndTime,
+            StartDateTime = evt.StartDateTime,
+            EndDateTime = evt.EndDateTime,
             Venue = evt.Venue,
             Status = evt.Status,
             MeetupUrl = evt.MeetupUrl,
@@ -78,8 +78,8 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
             EventDetails = new
             {
                 Name = nextEvent.Name,
-                StartTime = nextEvent.StartTime,
-                EndTime = nextEvent.EndTime,
+                StartDateTime = nextEvent.StartDateTime,
+                EndDateTime = nextEvent.EndDateTime,
                 Venue = nextEvent.Venue,
                 Status = nextEvent.Status,
                 Type = nextEvent.Type ?? "Regular Meetup",
@@ -110,8 +110,8 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
             .Select(evt => new
             {
                 Name = evt.Name,
-                StartTime = evt.StartTime,
-                EndTime = evt.EndTime,
+                StartDateTime = evt.StartDateTime,
+                EndDateTime = evt.EndDateTime,
                 Venue = evt.Venue,
                 MeetupUrl = evt.MeetupUrl,
                 Topics = evt.Topics,
@@ -123,7 +123,7 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
                     : "Event details",
                 Sessions = evt.Sessions?.Select(s => new { Topic = s.Title, s.Speaker }).ToArray() ?? []
             })
-            .OrderByDescending(evt => evt.StartTime)
+            .OrderByDescending(evt => evt.StartDateTime)
             .ToList();
 
         return new
@@ -153,13 +153,13 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
         var data = await dataStore.GetDataAsync();
 
         var recentEvents = pastEvents
-            .OrderByDescending(evt => evt.StartTime)
+            .OrderByDescending(evt => evt.StartDateTime)
             .Take(count)
             .Select(evt => new
             {
                 Name = evt.Name,
-                StartTime = evt.StartTime,
-                EndTime = evt.EndTime,
+                StartDateTime = evt.StartDateTime,
+                EndDateTime = evt.EndDateTime,
                 Venue = evt.Venue,
                 Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
                 Topics = evt.Topics,
@@ -199,12 +199,12 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
                 evt.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                 (evt.Abstract?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
                 (evt.Sessions?.Any(session => session.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ?? false))
-            .OrderByDescending(evt => evt.StartTime)
+            .OrderByDescending(evt => evt.StartDateTime)
             .Select(evt => new
             {
                 Name = evt.Name,
-                StartTime = evt.StartTime,
-                EndTime = evt.EndTime,
+                StartDateTime = evt.StartDateTime,
+                EndDateTime = evt.EndDateTime,
                 Venue = evt.Venue,
                 Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
                 Topics = evt.Topics,
@@ -227,12 +227,12 @@ public partial class EventsTool(CptmsdugDataStore dataStore)
                 evt.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                 (evt.Abstract?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
                 (evt.Sessions?.Any(session => session.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ?? false))
-            .OrderByDescending(evt => evt.StartTime)
+            .OrderByDescending(evt => evt.StartDateTime)
             .Select(evt => new
             {
                 Name = evt.Name,
-                StartTime = evt.StartTime,
-                EndTime = evt.EndTime,
+                StartDateTime = evt.StartDateTime,
+                EndDateTime = evt.EndDateTime,
                 Venue = evt.Venue,
                 Speakers = evt.AllSpeakers?.Select(s => new { s.Name, s.Company }).ToArray() ?? [],
                 Topics = evt.Topics,
