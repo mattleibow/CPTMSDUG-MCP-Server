@@ -420,4 +420,142 @@ public class EventDateParsingTests
         Assert.True(futureEvent.IsUpcoming);
         Assert.False(futureEvent.IsPast);
     }
+
+    // New tests for startDateTime and endDateTime format
+    [Theory]
+    [InlineData("13/09/2025 09:00", "2025-09-13T09:00:00+02:00")]
+    [InlineData("17/09/2025 17:30", "2025-09-17T17:30:00+02:00")]
+    [InlineData("22/10/2025 17:30", "2025-10-22T17:30:00+02:00")]
+    [InlineData("19/11/2025 17:30", "2025-11-19T17:30:00+02:00")]
+    [InlineData("25/01/2025 09:00", "2025-01-25T09:00:00+02:00")]
+    [InlineData("30/09/2021 09:00", "2021-09-30T09:00:00+02:00")]
+    public void StartTime_WithNewStartDateTimeField_ParsesCorrectly(string startDateTime, string expectedDateTimeOffset)
+    {
+        // Arrange
+        var eventItem = new Event
+        {
+            StartDateTime = startDateTime
+        };
+        var expected = DateTimeOffset.Parse(expectedDateTimeOffset);
+
+        // Act
+        var result = eventItem.StartTime;
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData("13/09/2025 13:00", "2025-09-13T13:00:00+02:00")]
+    [InlineData("17/09/2025 20:30", "2025-09-17T20:30:00+02:00")]
+    [InlineData("25/01/2025 17:00", "2025-01-25T17:00:00+02:00")]
+    [InlineData("29/11/2025 17:00", "2025-11-29T17:00:00+02:00")]
+    public void EndTime_WithNewEndDateTimeField_ParsesCorrectly(string endDateTime, string expectedDateTimeOffset)
+    {
+        // Arrange
+        var eventItem = new Event
+        {
+            EndDateTime = endDateTime
+        };
+        var expected = DateTimeOffset.Parse(expectedDateTimeOffset);
+
+        // Act
+        var result = eventItem.EndTime;
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void StartTime_And_EndTime_WithNewDateTimeFields_ParseCorrectly()
+    {
+        // Arrange - Test with actual VS Code Dev Days event data
+        var eventItem = new Event
+        {
+            StartDateTime = "13/09/2025 09:00",
+            EndDateTime = "13/09/2025 13:00"
+        };
+        var expectedStart = new DateTimeOffset(2025, 9, 13, 9, 0, 0, TimeSpan.FromHours(2));
+        var expectedEnd = new DateTimeOffset(2025, 9, 13, 13, 0, 0, TimeSpan.FromHours(2));
+
+        // Act
+        var startResult = eventItem.StartTime;
+        var endResult = eventItem.EndTime;
+
+        // Assert
+        Assert.NotNull(startResult);
+        Assert.NotNull(endResult);
+        Assert.Equal(expectedStart, startResult);
+        Assert.Equal(expectedEnd, endResult);
+    }
+
+    [Fact]
+    public void StartTime_PreferNewFormatOverLegacy_WhenBothPresent()
+    {
+        // Arrange - When both new and legacy formats are present, new format should take precedence
+        var eventItem = new Event
+        {
+            StartDateTime = "13/09/2025 09:00", // New format
+            Date = "2025-09-14", // Legacy format (different date)
+            Time = "10:00 AM SAST"
+        };
+        var expectedFromNewFormat = new DateTimeOffset(2025, 9, 13, 9, 0, 0, TimeSpan.FromHours(2));
+
+        // Act
+        var result = eventItem.StartTime;
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedFromNewFormat, result); // Should use new format, not legacy
+    }
+
+    [Fact]
+    public void EndTime_PreferNewFormatOverLegacy_WhenBothPresent()
+    {
+        // Arrange - When both new and legacy formats are present, new format should take precedence
+        var eventItem = new Event
+        {
+            EndDateTime = "13/09/2025 13:00", // New format
+            Date = "2025-09-14", // Legacy format (different date)
+            Time = "10:00 AM SAST"
+        };
+        var expectedFromNewFormat = new DateTimeOffset(2025, 9, 13, 13, 0, 0, TimeSpan.FromHours(2));
+
+        // Act
+        var result = eventItem.EndTime;
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedFromNewFormat, result); // Should use new format, not legacy
+    }
+
+    [Theory]
+    [InlineData("13/09/2025 09:00")]
+    [InlineData("17/09/2025 17:30")]
+    [InlineData("25/11/2023 09:00")]
+    public void IsUpcoming_WithNewStartDateTimeFormat_WorksCorrectly(string startDateTime)
+    {
+        // Arrange
+        var eventItem = new Event
+        {
+            StartDateTime = startDateTime
+        };
+
+        // Act & Assert
+        var startTime = eventItem.StartTime;
+        Assert.NotNull(startTime);
+        
+        var isUpcoming = eventItem.IsUpcoming;
+        var isPast = eventItem.IsPast;
+        
+        // Should be mutually exclusive
+        Assert.NotEqual(isUpcoming, isPast);
+        
+        // Verify the logic matches the start time
+        var now = DateTimeOffset.UtcNow;
+        Assert.Equal(startTime > now, isUpcoming);
+        Assert.Equal(startTime <= now, isPast);
+    }
 }

@@ -18,6 +18,12 @@ public class Event
     [JsonPropertyName("dates")]
     public string Dates { get; set; }
 
+    [JsonPropertyName("startDateTime")]
+    public string StartDateTime { get; set; }
+
+    [JsonPropertyName("endDateTime")]
+    public string EndDateTime { get; set; }
+
     [JsonPropertyName("venue")]
     public string Venue { get; set; }
 
@@ -110,7 +116,17 @@ public class Event
 
     private DateTimeOffset? ParseStartTime()
     {
-        // Format 1: Separate "date" and "time" fields
+        // Format 1: New combined startDateTime field (dd/MM/yyyy HH:mm)
+        if (!string.IsNullOrEmpty(StartDateTime) && StartDateTime != string.Empty)
+        {
+            if (DateTime.TryParseExact(StartDateTime, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDateTime))
+            {
+                // SAST is UTC+2
+                return new DateTimeOffset(parsedDateTime, TimeSpan.FromHours(2));
+            }
+        }
+
+        // Format 2: Legacy separate "date" and "time" fields (for backward compatibility)
         if (!string.IsNullOrEmpty(Date) && Date != string.Empty)
         {
             if (DateTime.TryParseExact(Date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
@@ -132,7 +148,7 @@ public class Event
             }
         }
 
-        // For "dates" field, get the first date
+        // Format 3: Legacy "dates" field, get the first date (for backward compatibility)
         if (!string.IsNullOrEmpty(Dates) && Dates != string.Empty)
         {
             var parsedDates = ParseDatesField();
@@ -144,13 +160,23 @@ public class Event
 
     private DateTimeOffset? ParseEndTime()
     {
-        // For single date events, end time is same as start time (unless we have duration info)
+        // Format 1: New combined endDateTime field (dd/MM/yyyy HH:mm)
+        if (!string.IsNullOrEmpty(EndDateTime) && EndDateTime != string.Empty)
+        {
+            if (DateTime.TryParseExact(EndDateTime, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDateTime))
+            {
+                // SAST is UTC+2
+                return new DateTimeOffset(parsedDateTime, TimeSpan.FromHours(2));
+            }
+        }
+
+        // Format 2: Legacy single date events, end time is same as start time (for backward compatibility)
         if (!string.IsNullOrEmpty(Date) && Date != string.Empty)
         {
             return StartTime; // Same day events
         }
 
-        // For "dates" field, get the last date
+        // Format 3: Legacy "dates" field, get the last date (for backward compatibility)
         if (!string.IsNullOrEmpty(Dates) && Dates != string.Empty)
         {
             var parsedDates = ParseDatesField();
@@ -158,6 +184,7 @@ public class Event
         }
 
         return null;
+    }
     }
 
     private List<DateTimeOffset> ParseDatesField()
