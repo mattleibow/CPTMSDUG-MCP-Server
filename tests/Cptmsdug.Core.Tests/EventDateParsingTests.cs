@@ -12,7 +12,7 @@ public class EventDateParsingTests
     [InlineData("19/11/2025 17:30", "2025-11-19T17:30:00+02:00")]
     [InlineData("25/01/2025 09:00", "2025-01-25T09:00:00+02:00")]
     [InlineData("30/09/2021 09:00", "2021-09-30T09:00:00+02:00")]
-    public void StartTime_WithStartDateTimeField_ParsesCorrectly(string startDateTime, string expectedDateTimeOffset)
+    public void StartDateTime_WithStartDateTimeField_ParsesCorrectly(string startDateTime, string expectedDateTimeOffset)
     {
         // Arrange
         var eventItem = new Event
@@ -22,7 +22,7 @@ public class EventDateParsingTests
         var expected = DateTimeOffset.Parse(expectedDateTimeOffset);
 
         // Act
-        var result = eventItem.StartTime;
+        var result = eventItem.StartDateTime;
 
         // Assert
         Assert.NotNull(result);
@@ -34,7 +34,7 @@ public class EventDateParsingTests
     [InlineData("17/09/2025 20:30", "2025-09-17T20:30:00+02:00")]
     [InlineData("25/01/2025 17:00", "2025-01-25T17:00:00+02:00")]
     [InlineData("29/11/2025 17:00", "2025-11-29T17:00:00+02:00")]
-    public void EndTime_WithEndDateTimeField_ParsesCorrectly(string endDateTime, string expectedDateTimeOffset)
+    public void EndDateTime_WithEndDateTimeField_ParsesCorrectly(string endDateTime, string expectedDateTimeOffset)
     {
         // Arrange
         var eventItem = new Event
@@ -44,7 +44,7 @@ public class EventDateParsingTests
         var expected = DateTimeOffset.Parse(expectedDateTimeOffset);
 
         // Act
-        var result = eventItem.EndTime;
+        var result = eventItem.EndDateTime;
 
         // Assert
         Assert.NotNull(result);
@@ -52,7 +52,7 @@ public class EventDateParsingTests
     }
 
     [Fact]
-    public void StartTime_And_EndTime_WithDateTimeFields_ParseCorrectly()
+    public void StartDateTime_And_EndDateTime_WithDateTimeFields_ParseCorrectly()
     {
         // Arrange - Test with actual VS Code Dev Days event data
         var startTime = new DateTimeOffset(2025, 9, 13, 9, 0, 0, TimeSpan.FromHours(2));
@@ -65,8 +65,8 @@ public class EventDateParsingTests
         };
 
         // Act
-        var startResult = eventItem.StartTime;
-        var endResult = eventItem.EndTime;
+        var startResult = eventItem.StartDateTime;
+        var endResult = eventItem.EndDateTime;
 
         // Assert
         Assert.NotNull(startResult);
@@ -76,7 +76,7 @@ public class EventDateParsingTests
     }
 
     [Fact]
-    public void StartTime_WithNullDateTime_ReturnsNull()
+    public void StartDateTime_WithNullDateTime_ReturnsNull()
     {
         // Arrange
         var eventItem = new Event
@@ -85,14 +85,14 @@ public class EventDateParsingTests
         };
 
         // Act
-        var result = eventItem.StartTime;
+        var result = eventItem.StartDateTime;
 
         // Assert
         Assert.Null(result);
     }
 
     [Fact]
-    public void EndTime_WithNullDateTime_ReturnsNull()
+    public void EndDateTime_WithNullDateTime_ReturnsNull()
     {
         // Arrange
         var eventItem = new Event
@@ -101,7 +101,7 @@ public class EventDateParsingTests
         };
 
         // Act
-        var result = eventItem.EndTime;
+        var result = eventItem.EndDateTime;
 
         // Assert
         Assert.Null(result);
@@ -126,8 +126,8 @@ public class EventDateParsingTests
         };
 
         // Act
-        var startTime = eventItem.StartTime;
-        var endTime = eventItem.EndTime;
+        var startTime = eventItem.StartDateTime;
+        var endTime = eventItem.EndDateTime;
 
         // Assert
         Assert.NotNull(startTime);
@@ -180,7 +180,7 @@ public class EventDateParsingTests
     }
 
     [Fact]
-    public void IsUpcoming_And_IsPast_WithNullStartTime_ReturnsFalse()
+    public void IsUpcoming_And_IsPast_WithNullStartDateTime_ReturnsFalse()
     {
         // Arrange
         var eventItem = new Event
@@ -229,7 +229,7 @@ public class EventDateParsingTests
         };
 
         // Act & Assert
-        var startTime = eventItem.StartTime;
+        var startTime = eventItem.StartDateTime;
         Assert.NotNull(startTime);
         
         var isUpcoming = eventItem.IsUpcoming;

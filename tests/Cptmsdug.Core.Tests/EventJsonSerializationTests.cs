@@ -35,8 +35,6 @@ public class EventJsonSerializationTests
         var expectedEnd = ParseSastDateTime(endDateTime);
         Assert.Equal(expectedStart, eventItem.StartDateTime);
         Assert.Equal(expectedEnd, eventItem.EndDateTime);
-        Assert.Equal(expectedStart, eventItem.StartTime);
-        Assert.Equal(expectedEnd, eventItem.EndTime);
         
         // Verify timezone
         Assert.Equal(TimeSpan.FromHours(2), eventItem.StartDateTime.Value.Offset);
@@ -70,8 +68,6 @@ public class EventJsonSerializationTests
         Assert.NotNull(eventItem);
         Assert.Null(eventItem.StartDateTime);
         Assert.Null(eventItem.EndDateTime);
-        Assert.Null(eventItem.StartTime);
-        Assert.Null(eventItem.EndTime);
 
         // Act - Serialize back
         var serializedJson = JsonSerializer.Serialize(eventItem);

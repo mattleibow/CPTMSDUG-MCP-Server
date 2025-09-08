@@ -88,19 +88,12 @@ public class Event
     [JsonPropertyName("speaker")]
     public string Speaker { get; set; }
 
-    // Computed properties for parsed dates
-    [JsonIgnore]
-    public DateTimeOffset? StartTime => StartDateTime;
-
-    [JsonIgnore]
-    public DateTimeOffset? EndTime => EndDateTime;
-
     // Computed properties for event status
     [JsonIgnore]
-    public bool IsUpcoming => StartTime.HasValue && StartTime.Value > DateTimeOffset.UtcNow;
+    public bool IsUpcoming => StartDateTime.HasValue && StartDateTime.Value > DateTimeOffset.UtcNow;
 
     [JsonIgnore]
-    public bool IsPast => StartTime.HasValue && StartTime.Value <= DateTimeOffset.UtcNow;
+    public bool IsPast => StartDateTime.HasValue && StartDateTime.Value <= DateTimeOffset.UtcNow;
 
     // Computed property that merges all speaker sources
     [JsonIgnore]
